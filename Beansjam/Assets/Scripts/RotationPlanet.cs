@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class RotationPlanet : MonoBehaviour {
 
+    public bool jump = false;
+    public float rotationSpeed = 2.0f;
+
 
 	// Use this for initialization
 	void Start () {
@@ -12,10 +15,14 @@ public class RotationPlanet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKey(KeyCode.A))
-            transform.Rotate(new Vector3(0, 0, -1));
+        if (!jump)
+        {
+            transform.Rotate(new Vector3(0, 0, Input.GetAxis("Horizontal") * rotationSpeed));
+        }
+    }
 
-        if (Input.GetKey(KeyCode.D))
-            transform.Rotate(new Vector3(0, 0, 1));
+    public void isJumping(bool jumped)
+    {
+        jump = jumped;
     }
 }
