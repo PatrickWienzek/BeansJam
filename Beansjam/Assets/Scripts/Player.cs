@@ -6,9 +6,10 @@ public class Player : MonoBehaviour {
 
     public int live = 3;
     public float speed = 0.55f;
-    public float jumpForce = 5.0f;
+    public float jumpForce = 50.0f;
     private Rigidbody2D _rigidbody;
     private RotationPlanet _planet;
+    private bool _jumpPossible = false;
 
 
 	// Use this for initialization
@@ -19,7 +20,8 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKey(KeyCode.Space))
+
+        if (Input.GetKey(KeyCode.Space) && _jumpPossible)
         {
             _rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             _planet.isJumping(true);
@@ -30,7 +32,22 @@ public class Player : MonoBehaviour {
         {
             _planet.isJumping(false);
         }
-           
-        
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.collider)
+        {
+            _jumpPossible = true;
+            Debug.Log("TEST JUMP TRUE");
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider)
+        {
+            _jumpPossible = false;
+            Debug.Log("TEST JUMP FALSE");
+        }
     }
 }
