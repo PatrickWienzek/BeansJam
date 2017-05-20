@@ -42,7 +42,7 @@ public class Player : MonoBehaviour {
         ).FirstOrDefault();
 
         foreach(var planet in GameObject.FindGameObjectsWithTag("Planet")) {
-            planet.GetComponent<RotationPlanet>().enabled = planet == nearestPlanet;
+            planet.GetComponent<RotationPlanet>().IsCurrentPlanet = (planet == nearestPlanet);
         }
     }
 
