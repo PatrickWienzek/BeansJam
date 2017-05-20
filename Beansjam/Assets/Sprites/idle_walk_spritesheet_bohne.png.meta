@@ -1,13 +1,9 @@
 fileFormatVersion: 2
-guid: 696e1ced82091f647b70b73ea432ce4d
-timeCreated: 1495264503
+guid: 020ec3e097e2fd54a9973cf6d029b84f
+timeCreated: 1495265424
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: idle_walk_spritesheet_bohne_0
-    21300002: idle_walk_spritesheet_bohne_1
-    21300004: idle_walk_spritesheet_bohne_2
-    21300006: idle_walk_spritesheet_bohne_3
+  fileIDToRecycleName: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -38,7 +34,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -62,69 +58,9 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Standalone
-    maxTextureSize: 2048
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: idle_walk_spritesheet_bohne_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 828
-        width: 196
-        height: 196
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: idle_walk_spritesheet_bohne_1
-      rect:
-        serializedVersion: 2
-        x: 196
-        y: 828
-        width: 196
-        height: 196
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: idle_walk_spritesheet_bohne_2
-      rect:
-        serializedVersion: 2
-        x: 392
-        y: 828
-        width: 196
-        height: 196
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: idle_walk_spritesheet_bohne_3
-      rect:
-        serializedVersion: 2
-        x: 588
-        y: 828
-        width: 196
-        height: 196
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
+    sprites: []
     outline: []
   spritePackingTag: 
   userData: 
