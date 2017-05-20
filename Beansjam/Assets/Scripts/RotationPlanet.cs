@@ -7,6 +7,8 @@ public class RotationPlanet : MonoBehaviour {
     public bool jump = false;
     public float rotationSpeed = 2.0f;
 
+    public bool IsCurrentPlanet = false;
+
 
 	// Use this for initialization
 	void Start () {
@@ -15,9 +17,17 @@ public class RotationPlanet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!jump)
+        if (IsCurrentPlanet && !jump)
         {
-            transform.Rotate(new Vector3(0, 0, Input.GetAxis("Horizontal") * rotationSpeed));
+            var rotateBy = Input.GetAxis("Horizontal") * rotationSpeed;
+            transform.Rotate( new Vector3(0, 0, rotateBy));
+
+            foreach(var planet in GameObject.FindGameObjectsWithTag("Planet")) {
+                var diff = planet.transform.position - this.transform.position;
+                var quat = Quaternion.Euler(0, 0, rotateBy);
+                diff = quat * diff;
+                planet.transform.position = this.transform.position + diff;
+            }
         }
     }
 
