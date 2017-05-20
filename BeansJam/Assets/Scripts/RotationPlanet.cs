@@ -5,7 +5,7 @@ using UnityEngine;
 public class RotationPlanet : MonoBehaviour {
 
     public bool jump = false;
-    public float rotationSpeed = 2.0f;
+    public float rotationSpeed = 0.5f;
 
 
 	// Use this for initialization
