@@ -22,10 +22,8 @@ public class AirState : MonoBehaviour {
 	void FixedUpdate () {
 		movex = Input.GetAxis ("Horizontal");
 		movey = Input.GetAxis ("Vertical");
-		if (transform.position.x <= 9)
-			rig.velocity = new Vector2 (movex * moveSpeed, movey * moveSpeed);
-		else
-			rig.velocity = Vector2.zero;
+
+		rig.velocity = new Vector2 (movex * moveSpeed, movey * moveSpeed);
 	
 	}
 
