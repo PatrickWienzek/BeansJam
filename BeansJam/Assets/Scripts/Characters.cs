@@ -27,7 +27,7 @@ public class Characters : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (!startLerpLeft) {
+		if (!startLerpLeft ) {
 			if (Input.GetKey (KeyCode.LeftArrow)) {
 				startLerpLeft = true;
 				chosenChar--;
