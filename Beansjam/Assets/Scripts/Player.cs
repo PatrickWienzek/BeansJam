@@ -13,6 +13,7 @@ public class Player : MonoBehaviour {
     private bool _jumpPossible = false;
     private Transform _jumpForcePosition;
     private Transform _planetCore;
+    private float _gravity = 0.25f;
 
 
 
@@ -62,7 +63,7 @@ public class Player : MonoBehaviour {
         if(!_jumpPossible)
         {
             //Gravity towards the Planetcore on the current planet
-            transform.position = Vector3.MoveTowards(transform.position, _planetCore.position, 0.2f);
+            transform.position = Vector3.MoveTowards(transform.position, _planetCore.position, _gravity);
             transform.up = transform.position - _planetCore.position;
         }
 
