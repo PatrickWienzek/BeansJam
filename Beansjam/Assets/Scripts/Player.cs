@@ -6,7 +6,7 @@ using System.Linq;
 public class Player : MonoBehaviour {
 
     public int live = 3;
-    public float speed = 0.55f;
+    public float speed = 0.25f;
     public float jumpForce = 15.0f;
     private Rigidbody2D _rigidbody;
     private RotationPlanet _planet;
@@ -15,7 +15,7 @@ public class Player : MonoBehaviour {
     private bool _jumpPossible = false;
     private Transform _jumpForcePosition;
     private Transform _planetCore;
-    private float _gravity = 0.25f;
+    private float _gravity = 5f;
     private GameObject[] enemies;
 
 
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour {
         if(!_jumpPossible)
         {
             //Gravity towards the Planetcore on the current planet
-            transform.position = Vector3.MoveTowards(transform.position, _planetCore.position, _gravity);
+            transform.position = Vector3.MoveTowards(transform.position, _planetCore.position, _gravity * Time.deltaTime);
             transform.up = transform.position - _planetCore.position;
         }
 
