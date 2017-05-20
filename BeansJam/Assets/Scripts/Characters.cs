@@ -107,6 +107,6 @@ public class Characters : MonoBehaviour {
 	}
 	public GameObject GetChosenChar()
 	{
-		return chars [chosenChar];
+        return chars [chosenChar];
 	}
 }
