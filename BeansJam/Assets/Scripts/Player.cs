@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            _extraGrav += Time.deltaTime;
+            _extraGrav += Time.deltaTime * 2;
         }
 
         if (Input.GetKey(KeyCode.Space) && _jumpPossible)
