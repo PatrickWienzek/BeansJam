@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Player : MonoBehaviour {
 
@@ -31,6 +32,17 @@ public class Player : MonoBehaviour {
         else
         {
             _planet.isJumping(false);
+        }
+
+        var nearestPlanet = (
+            from planet in GameObject.FindGameObjectsWithTag("Planet")
+            let distance = (planet.transform.position - this.transform.position)
+            orderby distance.sqrMagnitude
+            select planet
+        ).FirstOrDefault();
+
+        foreach(var planet in GameObject.FindGameObjectsWithTag("Planet")) {
+            planet.GetComponent<RotationPlanet>().enabled = planet == nearestPlanet;
         }
     }
 
