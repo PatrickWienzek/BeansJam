@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private Transform _planetCore;
     private float _gravity = 5f;
     private GameObject[] enemies;
+    private float _extraGrav = 1;
 
 
     // Use this for initialization
@@ -32,7 +33,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         Move();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         var nearestPlanet = (
@@ -79,26 +79,46 @@ public class Player : MonoBehaviour
     {
         transform.Translate(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0, 0);
 
+        if (_jumpPossible)
+        {
+            _extraGrav = 0;
+            _rigidbody.velocity = Vector3.zero;
+        }
+        else
+        {
+            _extraGrav += Time.deltaTime;
+        }
+
         if (Input.GetKey(KeyCode.Space) && _jumpPossible)
         {
             _rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             _planet.isJumping(true);
+
+            
         }
         else
         {
             _planet.isJumping(false);
         }
+
+
+            
+
     }
+        
 
     void Gravity()
     {
+
         if (!_jumpPossible)
         {
-            //Gravity towards the Planetcore on the current planet
-            transform.position = Vector3.MoveTowards(transform.position, _planetCore.position, _gravity * Time.deltaTime);
+            // Gravity towards the Planetcore on the current planet
+
+            transform.position = Vector3.MoveTowards(transform.position, _planetCore.position, _gravity * _extraGrav * Time.deltaTime);
+
             transform.up = transform.position - _planetCore.position;
         }
-
+        
     }
 
 
