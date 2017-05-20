@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Characters : MonoBehaviour {
-	public GameObject[] chars;
+public class RotateHats : MonoBehaviour {
+
+	public GameObject[] hats;
 	private int chosenChar = 2;
 	private Vector3[] oldPos;
 	private Vector3[] oldScale;
@@ -13,15 +14,15 @@ public class Characters : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		oldPos = new Vector3[chars.Length];
-		oldScale = new Vector3[chars.Length];
+		oldPos = new Vector3[hats.Length];
+		oldScale = new Vector3[hats.Length];
 		for(int i = 0; i < oldPos.Length; i++)
 		{
-			oldPos[i] = chars[i].transform.position;
+			oldPos[i] = hats[i].transform.position;
 		}
 		for(int i = 0; i < oldPos.Length; i++)
 		{
-			oldScale[i] = chars[i].transform.localScale;
+			oldScale[i] = hats[i].transform.localScale;
 		}
 	}
 
@@ -43,23 +44,23 @@ public class Characters : MonoBehaviour {
 
 		if (startLerpLeft) {
 			lerp += Time.deltaTime;
-			for (int i = 0; i < chars.Length; i++) {
+			for (int i = 0; i < hats.Length; i++) {
 				if (lerp <= 1.0f) {
-					if (i == chars.Length - 1) {
-						chars [i].transform.position = Vector3.Lerp (oldPos[i], oldPos [0], lerp);
-						chars [i].transform.localScale = Vector3.Lerp (oldScale[i], oldScale [0], lerp);
+					if (i == hats.Length - 1) {
+						hats [i].transform.position = Vector3.Lerp (oldPos[i], oldPos [0], lerp);
+						hats [i].transform.localScale = Vector3.Lerp (oldScale[i], oldScale [0], lerp);
 
 					} else {
 
-						chars [i].transform.position = Vector3.Lerp (oldPos[i], oldPos [i + 1], lerp);
-						chars [i].transform.localScale = Vector3.Lerp (oldScale[i], oldScale [i + 1], lerp);
+						hats [i].transform.position = Vector3.Lerp (oldPos[i], oldPos [i + 1], lerp);
+						hats [i].transform.localScale = Vector3.Lerp (oldScale[i], oldScale [i + 1], lerp);
 					}
 				} 
 				if (lerp > 1.0f) {
 					var pos = oldPos[0];
 					var scal = oldScale [0];
-					for (int j = 0; j < chars.Length; j++) {
-						if (j == chars.Length - 1) {
+					for (int j = 0; j < hats.Length; j++) {
+						if (j == hats.Length - 1) {
 							oldPos[j] = pos;
 							oldScale[j] = scal;
 						} else {
@@ -75,21 +76,21 @@ public class Characters : MonoBehaviour {
 
 		if (startLerpRight) {
 			lerp += Time.deltaTime;
-			for (int i = chars.Length - 1; i >= 0; i--) {
+			for (int i = hats.Length - 1; i >= 0; i--) {
 				if (lerp <= 1.0f) {
 					if (i == 0) {
-						chars [i].transform.position = Vector3.Lerp (oldPos[i], oldPos [chars.Length - 1], lerp);
-						chars [i].transform.localScale = Vector3.Lerp (oldScale[i], oldScale [chars.Length - 1], lerp);
+						hats [i].transform.position = Vector3.Lerp (oldPos[i], oldPos [hats.Length - 1], lerp);
+						hats [i].transform.localScale = Vector3.Lerp (oldScale[i], oldScale [hats.Length - 1], lerp);
 
 					} else {
-						chars [i].transform.position = Vector3.Lerp (oldPos[i], oldPos [i - 1], lerp);
-						chars [i].transform.localScale = Vector3.Lerp (oldScale[i], oldScale [i - 1], lerp);
+						hats [i].transform.position = Vector3.Lerp (oldPos[i], oldPos [i - 1], lerp);
+						hats [i].transform.localScale = Vector3.Lerp (oldScale[i], oldScale [i - 1], lerp);
 					}
 				} 
 				if (lerp > 1.0f) {
-					var pos = oldPos[chars.Length - 1];
-					var scal = oldScale [chars.Length - 1];
-					for (int j = chars.Length - 1; j >= 0; j--) {
+					var pos = oldPos[hats.Length - 1];
+					var scal = oldScale [hats.Length - 1];
+					for (int j = hats.Length - 1; j >= 0; j--) {
 						if (j == 0) {
 							oldPos[j] = pos;
 							oldScale[j] = scal;
@@ -107,6 +108,6 @@ public class Characters : MonoBehaviour {
 	}
 	public GameObject GetChosenChar()
 	{
-        return chars [chosenChar];
+		return hats [chosenChar];
 	}
 }
