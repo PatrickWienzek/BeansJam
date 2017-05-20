@@ -17,7 +17,7 @@ public class SpawnSphere : MonoBehaviour {
 	void Update () {
 		timer += Time.deltaTime;
 		if (timer >= waitTime) {
-			Instantiate (pref, new Vector2 (10, Random.Range(-5, 5)), Quaternion.identity);
+			Destroy (Instantiate (pref, new Vector2 (10, Random.Range (-5, 5)), Quaternion.identity), 10f);
 			timer = timer % waitTime;
 		}
 	}
