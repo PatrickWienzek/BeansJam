@@ -10,13 +10,16 @@ public class Player : MonoBehaviour {
     public float jumpForce = 50.0f;
     private Rigidbody2D _rigidbody;
     private RotationPlanet _planet;
+    public float rotationSpeed = 120.0f;
     private bool _jumpPossible = false;
+    private GameObject[] enemies;
 
 
 	// Use this for initialization
 	void Start () {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _planet = GameObject.FindGameObjectWithTag("Planet").GetComponent<RotationPlanet>();
+        //_planet = GameObject.FindGameObjectWithTag("Planet").GetComponent<RotationPlanet>();
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
 	}
 	
 	// Update is called once per frame
@@ -25,13 +28,13 @@ public class Player : MonoBehaviour {
         if (Input.GetKey(KeyCode.Space) && _jumpPossible)
         {
             _rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
-            _planet.isJumping(true);
+            //_planet.isJumping(true);
 
             transform.Translate(Input.GetAxis("Horizontal") * speed,0,0);
         }
         else
         {
-            _planet.isJumping(false);
+            //_planet.isJumping(false);
         }
 
         var nearestPlanet = (
@@ -41,9 +44,29 @@ public class Player : MonoBehaviour {
             select planet
         ).FirstOrDefault();
 
+        var rotateBy = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
+        this.RotateObjects(nearestPlanet, rotateBy);
+    }
+
+    private void RotateObjects(GameObject nearestPlanet, float rotateBy) {
         foreach(var planet in GameObject.FindGameObjectsWithTag("Planet")) {
-            planet.GetComponent<RotationPlanet>().IsCurrentPlanet = (planet == nearestPlanet);
+            RotateGameObject(nearestPlanet, planet, rotateBy);
+
+            if(planet == nearestPlanet) {
+                planet.transform.Rotate(0, 0, rotateBy);
+            }
         }
+
+        foreach(var enemy in enemies) {
+            RotateGameObject(nearestPlanet, enemy, rotateBy);
+        }
+    }
+
+    private void RotateGameObject(GameObject rotateAround, GameObject planet, float rotateBy) {
+        var diff = planet.transform.position - rotateAround.transform.position;
+        var quat = Quaternion.Euler(0, 0, rotateBy);
+        diff = quat * diff;
+        planet.transform.position = rotateAround.transform.position + diff;
     }
 
     private void OnCollisionStay2D(Collision2D collision)
