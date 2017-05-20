@@ -47,21 +47,19 @@ public class Player : MonoBehaviour
 
         var rotateBy = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
         this.RotateObjects(nearestPlanet, rotateBy);
+        Gravity();
     }
 
     private void RotateObjects(GameObject nearestPlanet, float rotateBy)
     {
-        
         foreach (var planet in GameObject.FindGameObjectsWithTag("Planet"))
         {
             planet.GetComponent<RotationPlanet>().enabled = planet == nearestPlanet;
-        }
-        Gravity();
-        RotateGameObject(nearestPlanet, planet, rotateBy);
+            RotateGameObject(nearestPlanet, planet, rotateBy);
 
-        if (planet == nearestPlanet)
-        {
-            planet.transform.Rotate(0, 0, rotateBy);
+            if(planet == nearestPlanet) {
+                planet.transform.Rotate(0, 0, rotateBy);
+            }
         }
 
         foreach (var enemy in enemies)
