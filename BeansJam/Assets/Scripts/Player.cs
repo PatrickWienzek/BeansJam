@@ -44,7 +44,6 @@ public class Player : MonoBehaviour
 
         _planetCore = nearestPlanet.transform.GetChild(0);
 
-
         var rotateBy = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
         this.RotateObjects(nearestPlanet, rotateBy);
         Gravity();
@@ -56,10 +55,6 @@ public class Player : MonoBehaviour
         {
             planet.GetComponent<RotationPlanet>().enabled = planet == nearestPlanet;
             RotateGameObject(nearestPlanet, planet, rotateBy);
-
-            if(planet == nearestPlanet) {
-                planet.transform.Rotate(0, 0, rotateBy);
-            }
         }
 
         foreach (var enemy in enemies)
