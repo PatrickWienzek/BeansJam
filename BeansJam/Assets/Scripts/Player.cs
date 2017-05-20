@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
     public int live = 3;
     public float speed = 0.125f;
-    public float jumpForce = 15.0f;
+    public float jumpForce = 55.0f;
     private Rigidbody2D _rigidbody;
     private RotationPlanet _planet;
     private GameObject planet;
@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
 
     private void RotateObjects(GameObject nearestPlanet, float rotateBy)
     {
+        
         foreach (var planet in GameObject.FindGameObjectsWithTag("Planet"))
         {
             planet.GetComponent<RotationPlanet>().enabled = planet == nearestPlanet;
@@ -80,7 +81,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && _jumpPossible)
         {
-            _rigidbody.AddForce(transform.up * jumpForce);
+            _rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             _planet.isJumping(true);
         }
         else
