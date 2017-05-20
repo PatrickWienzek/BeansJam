@@ -42,6 +42,9 @@ public class Player : MonoBehaviour
             select planet
         ).FirstOrDefault();
 
+        _planetCore = nearestPlanet.transform.GetChild(0);
+
+
         var rotateBy = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
         this.RotateObjects(nearestPlanet, rotateBy);
     }
