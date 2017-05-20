@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour {
     public GameObject bohne;
     public GameObject bohne_budi;
     public GameObject bohne_eddie;
-    public GameObject bohne_horse;
     public GameObject bohne_laser;
     public GameObject bohne_nils;
     public GameObject bohne_simon;
@@ -31,8 +30,6 @@ public class GameManager : MonoBehaviour {
                     _player = (GameObject)Instantiate(bohne_budi, new Vector3(0, 11.5f, 0), Quaternion.identity);
                 else if (_selectedCharacter.Equals(bohne_eddie.name))
                     _player = (GameObject)Instantiate(bohne_eddie, new Vector3(0, 11.5f, 0), Quaternion.identity);
-                else if (_selectedCharacter.Equals(bohne_horse.name))
-                    _player = (GameObject)Instantiate(bohne_horse, new Vector3(0, 11.5f, 0), Quaternion.identity);
                 else if (_selectedCharacter.Equals(bohne_laser.name))
                     _player = (GameObject)Instantiate(bohne_laser, new Vector3(0, 11.5f, 0), Quaternion.identity);
                 else if (_selectedCharacter.Equals(bohne_nils.name))

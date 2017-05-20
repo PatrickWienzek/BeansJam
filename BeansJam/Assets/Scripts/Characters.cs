@@ -31,6 +31,9 @@ public class Characters : MonoBehaviour {
 			if (Input.GetKey (KeyCode.LeftArrow)) {
 				startLerpLeft = true;
 				chosenChar--;
+                if (chosenChar < 0)
+                    chosenChar = chars.Length - 1;
+
 			}
 		}
 
@@ -38,7 +41,9 @@ public class Characters : MonoBehaviour {
 			if (Input.GetKey (KeyCode.RightArrow)) {
 				startLerpRight = true;
 				chosenChar++;
-			}
+                if (chosenChar > chars.Length -1)
+                    chosenChar = 0;
+            }
 		}
 
 		if (startLerpLeft) {
@@ -107,6 +112,7 @@ public class Characters : MonoBehaviour {
 	}
 	public GameObject GetChosenChar()
 	{
+
         return chars [chosenChar];
 	}
 }
