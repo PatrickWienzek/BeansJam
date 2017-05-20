@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class StormParticle : MonoBehaviour {
+public class PickUpBehavior : MonoBehaviour {
 
     private float alpha;
     private bool pickedUp;
@@ -12,7 +10,7 @@ public class StormParticle : MonoBehaviour {
     public float pickUpDistance = 0.75f;
 
 
-    private float pickUpSq {
+    private float PickUpSq {
         get { return pickUpDistance * pickUpDistance; }
     }
 
@@ -39,7 +37,7 @@ public class StormParticle : MonoBehaviour {
                 distance * Mathf.Cos(alpha)
             );
 
-            if((player.transform.position - this.transform.position).sqrMagnitude < pickUpSq) {
+            if((player.transform.position - this.transform.position).sqrMagnitude < PickUpSq) {
                 pickedUp = true;
             }
         } else {
