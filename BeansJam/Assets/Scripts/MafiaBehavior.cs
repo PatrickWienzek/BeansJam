@@ -9,9 +9,8 @@ public class MafiaBehavior : MonoBehaviour {
     public float Alpha;
 
     public float OrbitRadius = 15f;
-    public float AngularVelocity = Mathf.PI / 8f;
-    public float LinearVelocity = 5.0f;
-    public float ShotDistance = 3.0f;
+    public float angularVelocity = Mathf.PI / 8f;
+    public float linearVelocity = 5.0f;
 
     private GameObject nearestPlanet;
     private GameObject player;
@@ -35,12 +34,12 @@ public class MafiaBehavior : MonoBehaviour {
                 // Bestes Epsilon ever -----------------------------v
                 if(this.CurrentRadius > OrbitRadius * OrbitRadius + 1) {
                     var direction = Difference(nearestPlanet, this.gameObject).normalized;
-                    this.gameObject.transform.Translate(direction * this.LinearVelocity * Time.deltaTime, Space.World);
+                    this.gameObject.transform.Translate(direction * this.linearVelocity * Time.deltaTime, Space.World);
                     this.gameObject.transform.right = direction;
                 } else {
                     // In Orbit
                     var d = Difference(this.gameObject, nearestPlanet);
-                    this.Alpha = Mathf.Atan2(d.y, d.x) - AngularVelocity * Time.deltaTime;
+                    this.Alpha = Mathf.Atan2(d.y, d.x) - angularVelocity * Time.deltaTime;
                     this.gameObject.transform.position = new Vector3(
                         nearestPlanet.transform.position.x + OrbitRadius * Mathf.Cos(Alpha),
                         nearestPlanet.transform.position.y + OrbitRadius * Mathf.Sin(Alpha),
@@ -50,13 +49,7 @@ public class MafiaBehavior : MonoBehaviour {
                 }
             }
         } else {
-            var direction = Difference(player, this.gameObject);
-            if(direction.sqrMagnitude >= ShotDistance * ShotDistance) {
-                this.gameObject.transform.Translate(direction.normalized * this.LinearVelocity * Time.deltaTime, Space.World);
-                this.gameObject.transform.right = direction.normalized;
-            } else {
-                // ...
-            }
+            // ...
         }
 
         Debug.DrawRay(this.transform.position, player.transform.position - this.transform.position);
