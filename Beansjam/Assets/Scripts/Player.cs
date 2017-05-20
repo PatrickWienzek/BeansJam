@@ -51,7 +51,6 @@ public class Player : MonoBehaviour {
         if (collision.collider)
         {
             _jumpPossible = true;
-            Debug.Log("TEST JUMP TRUE");
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
@@ -59,7 +58,6 @@ public class Player : MonoBehaviour {
         if (collision.collider)
         {
             _jumpPossible = false;
-            Debug.Log("TEST JUMP FALSE");
         }
     }
 }
