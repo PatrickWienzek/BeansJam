@@ -30,6 +30,13 @@ public class Player : MonoBehaviour
     private float fuel = 5.0f;
     public float burnRate = 1.0f;
 
+    public bool InvertControl = false;
+    public float ControlFactor {
+        get {
+            return InvertControl ? -1.0f : 1.0f;
+        }
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -67,11 +74,11 @@ public class Player : MonoBehaviour
                 _planetCore = newCore;
             }
 
-            var rotateBy = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
+            var rotateBy = Input.GetAxis("Horizontal") * ControlFactor * rotationSpeed * Time.deltaTime;
             this.RotateObjects(nearestPlanet, rotateBy);
             Gravity();
         } else {
-            var dir = (transform.up * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal")) * Time.deltaTime * flyingSpeed;
+            var dir = (transform.up * Input.GetAxis("Vertical") * ControlFactor + transform.right * Input.GetAxis("Horizontal") * ControlFactor) * Time.deltaTime * flyingSpeed;
             Debug.DrawRay(transform.position, dir);
 
             _rigidbody.velocity = dir;
@@ -136,7 +143,7 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        var horizontal = Input.GetAxis("Horizontal");
+        var horizontal = Input.GetAxis("Horizontal") * ControlFactor;
         transform.Translate(horizontal * speed * Time.deltaTime, 0, 0);
 
         if(horizontal != 0.0f) {

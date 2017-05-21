@@ -15,9 +15,10 @@ public class RotationPlanet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (!jump)
         {
-            transform.Rotate(new Vector3(0, 0, Input.GetAxis("Horizontal") * rotationSpeed));
+            transform.Rotate(new Vector3(0, 0, Input.GetAxis("Horizontal") * player.ControlFactor * rotationSpeed));
         }
     }
 
