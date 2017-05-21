@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Diagnostics;
+using UnityEngine;
 
 public class PickUpBehavior : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class PickUpBehavior : MonoBehaviour {
     public float angularVelocity = Mathf.PI / 2.0f;
     public float linearVelocity = 2.0f;
     public float pickUpDistance = 0.75f;
+    public float fuelAmount = 5.0f;
 
 
     private float PickUpSq {
@@ -24,11 +26,13 @@ public class PickUpBehavior : MonoBehaviour {
 
         this.distance = Mathf.Sqrt(x * x + z * z);
         this.alpha = Mathf.Atan2(z, x);
-
-        this.player = GameObject.FindGameObjectWithTag("Player");
 	}
 	
 	void Update () {
+        this.player = this.player ?? GameObject.FindGameObjectWithTag("Player");
+
+        if(this.player == null) return;
+
         if(!pickedUp) {
             alpha += Time.deltaTime * angularVelocity;
             this.transform.localPosition = new Vector3(
@@ -45,8 +49,8 @@ public class PickUpBehavior : MonoBehaviour {
             var delta = diff.normalized * Time.deltaTime;
 
             if(delta.sqrMagnitude > diff.sqrMagnitude) {
-                // Apply power up
                 this.gameObject.SetActive(false);
+                player.GetComponentInChildren<Player>().AddFuel(fuelAmount);
             } else {
                 this.transform.position += delta;
             }

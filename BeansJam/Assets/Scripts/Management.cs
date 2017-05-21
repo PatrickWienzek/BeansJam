@@ -29,7 +29,7 @@ public class Management : MonoBehaviour {
             DontDestroyOnLoad(GameObject.Find("GameManager"));
             GameManager manager = GameObject.Find("GameManager").GetComponent<GameManager>();
             Characters character =  GameObject.Find("Bohnen").GetComponent<Characters>();
-            manager.setCharacter(character.GetChosenChar().name);
+            manager.SetCharacter(character.GetChosenChar().name);
             SceneManager.LoadScene ("BeansJamScene");
 		}
 		if (Input.GetKeyDown (KeyCode.Escape)) {
