@@ -32,7 +32,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-BeansJam/Assets/Sprites/zitat_01.png.meta
-BeansJam/Assets/Sprites/zitat_02.png.meta
-BeansJam/Assets/Sprites/zitat_03.png.meta
-BeansJam/Assets/Animations/bohne.controller
+
+
