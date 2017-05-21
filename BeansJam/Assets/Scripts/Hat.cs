@@ -111,11 +111,14 @@ public abstract class Hat {
 
     public class AstronautHat : Hat {
         public override void Apply(Player player) {
+
             player.AdditionalMaxFuel = 50.0f;
+            player.gameObject.transform.GetChild(2).transform.GetChild(5).gameObject.SetActive(true);
         }
 
         public override void Remove(Player player) {
             player.AdditionalMaxFuel = 0.0f;
+            player.gameObject.transform.GetChild(2).transform.GetChild(5).gameObject.SetActive(false);
         }
     }
 }
