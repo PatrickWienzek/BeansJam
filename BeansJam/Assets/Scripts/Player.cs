@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
@@ -29,6 +30,18 @@ public class Player : MonoBehaviour {
     private bool _jumpPossible = false;
     private Transform _jumpForcePosition;
     private Transform _planetCore;
+
+    internal void DealDamage(float damage) {
+        this.fuel -= damage;
+
+        if(this.fuel <= 0.0f) {
+            // TODO: Todesanimation, Patrick
+
+
+            SceneManager.LoadScene("BeansJamScene");
+        }
+    }
+
     private float _gravity = 5f;
     private GameObject[] enemies;
     private float _extraGrav = 1;

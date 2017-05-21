@@ -17,15 +17,15 @@ public class CameraShake : MonoBehaviour {
 	}
 
     public void Shake() {
-        this.StartCoroutine(this.ShakeImpl());
+        this.StartCoroutine(this.ShakeImpl(this.ShakeIntensity));
     }
 
-    private IEnumerator ShakeImpl() {
+    private IEnumerator ShakeImpl(float shakeIntensity) {
         //var prevPosition = this.transform.position;
 
         var shakeTimer = this.ShakeDuration;
         while(shakeTimer > 0.0f) {
-            var cameraOffset = Random.insideUnitCircle * this.ShakeDuration * shakeTimer;
+            var cameraOffset = Random.insideUnitCircle * shakeIntensity * shakeTimer;
             this.transform.localPosition += new Vector3(cameraOffset.x, cameraOffset.y, 0.0f);
 
             shakeTimer -= Time.deltaTime;
