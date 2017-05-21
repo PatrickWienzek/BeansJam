@@ -35,6 +35,9 @@ public class Player : MonoBehaviour {
             return InvertControl ? -1.0f : 1.0f;
         }
     }
+
+    public bool StealMode = false;
+
     public bool invincible = false;
     public bool stealth = false;
     private Hat hat;

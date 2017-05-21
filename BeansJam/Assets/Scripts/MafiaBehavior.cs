@@ -16,11 +16,17 @@ public class MafiaBehavior : MonoBehaviour {
     private GameObject player;
     private bool hasSpottedPlayer = false;
 
-    void Start () {
-        this.player = GameObject.FindGameObjectWithTag("Player");
-	}
-	
-	void Update () {
+    public float ScanArea = 5.0f;
+
+    void Start() {
+
+    }
+
+    void Update() {
+        this.player = this.player ?? GameObject.FindGameObjectWithTag("Player");
+
+        var canSpotPlayer = !this.player.GetComponent<Player>().StealMode;
+
         nearestPlanet = (
             from planet in GameObject.FindGameObjectsWithTag("Planet")
             let distance = (planet.transform.position - player.transform.position)
@@ -52,12 +58,10 @@ public class MafiaBehavior : MonoBehaviour {
             // ...
         }
 
-        Debug.DrawRay(this.transform.position, player.transform.position - this.transform.position);
-        var hit = Physics2D.Raycast(this.transform.position, (player.transform.position - this.transform.position).normalized);
-        hasSpottedPlayer = hit.collider.gameObject == player;
-
-        
-	}
+        Debug.DrawLine(this.transform.position, this.transform.position + (player.transform.position - this.transform.position).normalized * this.ScanArea);
+        var hit = Physics2D.Raycast(this.transform.position, (player.transform.position - this.transform.position).normalized, this.ScanArea);
+        hasSpottedPlayer = canSpotPlayer && hit.collider != null && hit.collider.gameObject == player;
+    }
 
     private Vector3 Difference(GameObject a, GameObject b) {
         return a.transform.position - b.transform.position;
