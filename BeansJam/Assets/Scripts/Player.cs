@@ -106,7 +106,9 @@ public class Player : MonoBehaviour
             RotateGameObject(nearestPlanet, enemy, rotateBy);
         }
 
-        RotateGameObject(nearestPlanet, background, rotateBy);
+        //RotateGameObject(nearestPlanet, background, rotateBy);
+        background.transform.rotation *= Quaternion.Euler(0, 0, rotateBy);
+        background.transform.position = nearestPlanet.transform.position;
     }
 
     private void RotateGameObject(GameObject rotateAround, GameObject planet, float rotateBy)
