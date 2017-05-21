@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections;
+using System.Diagnostics;
 using UnityEngine;
 
 public class PickUpBehavior : MonoBehaviour {
@@ -10,6 +12,9 @@ public class PickUpBehavior : MonoBehaviour {
     public float linearVelocity = 2.0f;
     public float pickUpDistance = 0.75f;
     public float fuelAmount = 5.0f;
+    public float CoolDownInSeconds = 45.0f;
+
+    private Vector3 startPosition;
 
 
     private float PickUpSq {
@@ -19,8 +24,11 @@ public class PickUpBehavior : MonoBehaviour {
     private float distance;
 
     private GameObject player;
+    private bool isGone;
 
-	void Start () {
+    void Start () {
+        this.startPosition = this.transform.localPosition;
+
         var x = this.transform.localPosition.x;
         var z = this.transform.localPosition.z;
 
@@ -29,6 +37,8 @@ public class PickUpBehavior : MonoBehaviour {
 	}
 	
 	void Update () {
+        if(this.isGone) return;
+
         this.player = this.player ?? GameObject.FindGameObjectWithTag("Player");
 
         if(this.player == null) return;
@@ -49,11 +59,23 @@ public class PickUpBehavior : MonoBehaviour {
             var delta = diff.normalized * Time.deltaTime;
 
             if(delta.sqrMagnitude > diff.sqrMagnitude) {
-                this.gameObject.SetActive(false);
+                //this.gameObject.SetActive(false);
+                this.GetComponent<SpriteRenderer>().enabled = false;
+                this.isGone = true;
+                this.pickedUp = false;
                 player.GetComponentInChildren<Player>().AddFuel(fuelAmount);
+
+                StartCoroutine(coolDown());
             } else {
                 this.transform.position += delta;
             }
         }
 	}
+    private IEnumerator coolDown() {
+        yield return new WaitForSeconds(this.CoolDownInSeconds);
+
+        this.transform.localPosition = this.startPosition;
+        this.GetComponent<SpriteRenderer>().enabled = true;
+        this.isGone = false;
+    }
 }
