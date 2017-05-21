@@ -13,13 +13,18 @@ public class Player : MonoBehaviour
     private RotationPlanet _planet;
     private GameObject planet;
     public float rotationSpeed = 60.0f;
+    public float flyingSpeed = 100;
     private bool _jumpPossible = false;
     private Transform _jumpForcePosition;
     private Transform _planetCore;
     private float _gravity = 5f;
     private GameObject[] enemies;
     private float _extraGrav = 1;
+    private float cameraTimer = 0.0f;
+    private GameObject background;
 
+    private bool isFlying = false;
+    private float fuel = 0.0f;
 
     // Use this for initialization
     void Start()
@@ -29,12 +34,14 @@ public class Player : MonoBehaviour
         planet = GameObject.FindGameObjectWithTag("Planet");
         _planetCore = GameObject.FindGameObjectWithTag("Planet").transform.GetChild(0);
         _jumpForcePosition = transform.GetChild(1).transform;
+        background = GameObject.Find("Background");
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
+   
     // Update is called once per frame
     void Update()
     {
         Move();
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
         var nearestPlanet = (
             from planet in GameObject.FindGameObjectsWithTag("Planet")
             let distance = (planet.transform.position - this.transform.position)
@@ -42,24 +49,37 @@ public class Player : MonoBehaviour
             select planet
         ).FirstOrDefault();
 
-        var newCore = nearestPlanet.transform.GetChild(0);
-        if(newCore != _planetCore) {
-            StartCoroutine(TurnCamera(_planetCore));
-            _planetCore = nearestPlanet.transform.GetChild(0);
+        var wasFlying = isFlying;
+        isFlying = Input.GetKey(KeyCode.LeftShift);
+        _planet.isJumping(isFlying);
+        if(wasFlying && !isFlying) {
+            StartCoroutine(TurnCamera(transform.rotation));
         }
 
-        var rotateBy = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
-        this.RotateObjects(nearestPlanet, rotateBy);
-        Gravity();
+        if(!isFlying) {
+            var newCore = nearestPlanet.transform.GetChild(0);
+            if(newCore != _planetCore) {
+                StartCoroutine(TurnCamera(_planetCore.rotation));
+                _planetCore = newCore;
+            }
+
+            var rotateBy = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
+            this.RotateObjects(nearestPlanet, rotateBy);
+            Gravity();
+        } else {
+            var dir = (transform.up * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal")) * Time.deltaTime * flyingSpeed;
+            Debug.DrawRay(transform.position, dir);
+
+            _rigidbody.velocity = dir;
+        }
     }
 
-    private float cameraTimer = 0.0f;
-    private IEnumerator TurnCamera(Transform prev) {
+    private IEnumerator TurnCamera(Quaternion prev) {
         cameraTimer = 0.25f;
 
         while(cameraTimer > 0.0f) {
             this.transform.rotation = Quaternion.Lerp(
-                prev.rotation,
+                prev,
                 Quaternion.LookRotation(Vector3.forward, this.transform.position - _planetCore.position),
                 1f - 4f * cameraTimer
             );
@@ -67,13 +87,17 @@ public class Player : MonoBehaviour
             cameraTimer -= Time.deltaTime;
             yield return null;
         }
+
+        transform.up = transform.position - _planetCore.position;
     }
 
     private void RotateObjects(GameObject nearestPlanet, float rotateBy)
     {
         foreach (var planet in GameObject.FindGameObjectsWithTag("Planet"))
         {
-            planet.GetComponent<RotationPlanet>().enabled = planet == nearestPlanet;
+            _planet = planet.GetComponent<RotationPlanet>();
+            _planet.enabled = planet == nearestPlanet;
+            _planet.isJumping(isFlying);
             RotateGameObject(nearestPlanet, planet, rotateBy);
         }
 
@@ -81,6 +105,8 @@ public class Player : MonoBehaviour
         {
             RotateGameObject(nearestPlanet, enemy, rotateBy);
         }
+
+        RotateGameObject(nearestPlanet, background, rotateBy);
     }
 
     private void RotateGameObject(GameObject rotateAround, GameObject planet, float rotateBy)
@@ -109,7 +135,7 @@ public class Player : MonoBehaviour
             _extraGrav = 0;
             _rigidbody.velocity = Vector3.zero;
         }
-        else
+        else if(!isFlying)
         {
             _extraGrav += Time.deltaTime * 2;
         }
@@ -121,7 +147,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            _planet.isJumping(false);
+            _planet.isJumping(isFlying);
         }
     }
         
