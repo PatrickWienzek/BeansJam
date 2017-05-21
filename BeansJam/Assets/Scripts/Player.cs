@@ -54,6 +54,7 @@ public class Player : MonoBehaviour {
 
     internal void ApplyHat(Hat hat)
     {
+        Debug.Log("HAT " +  hat.GetType().Name);
         if (this.hat != null)
             this.hat.Remove(this);
 
@@ -156,6 +157,12 @@ public class Player : MonoBehaviour {
         if(horizontal != 0.0f) {
             if(transform.Find("Visuals") != null) {
                 transform.Find("Visuals")
+                    .transform
+                    .localRotation = Quaternion.Euler(0f, horizontal < 0f ? 180f : 0f, 0f);
+            }
+            if (transform.Find("hats") != null)
+            {
+                transform.Find("hats")
                     .transform
                     .localRotation = Quaternion.Euler(0f, horizontal < 0f ? 180f : 0f, 0f);
             }

@@ -23,20 +23,27 @@ public abstract class Hat {
     public class HorseHeadHat : Hat {
         public override void Apply(Player player) {
             player.rotationSpeed += 5;
+            player.speed += 5;
+            player.gameObject.transform.GetChild(2).transform.GetChild(6).gameObject.SetActive(true);
+
         }
 
         public override void Remove(Player player) {
             player.rotationSpeed -= 5;
+            player.speed += 5;
+            player.gameObject.transform.GetChild(2).transform.GetChild(6).gameObject.SetActive(false);
         }
     }
 
     public class EtienneHat : Hat {
         public override void Apply(Player player) {
             player.InvertControl = true;
+            player.gameObject.transform.GetChild(2).transform.GetChild(4).gameObject.SetActive(true);
         }
 
         public override void Remove(Player player) {
             player.InvertControl = false;
+            player.gameObject.transform.GetChild(2).transform.GetChild(4).gameObject.SetActive(false);
         }
     }
 
@@ -45,11 +52,13 @@ public abstract class Hat {
         public override void Apply(Player player)
         {
             player.jumpForce += 10;
+            player.gameObject.transform.GetChild(2).transform.GetChild(7).gameObject.SetActive(true);
         }
 
         public override void Remove(Player player)
         {
             player.jumpForce -= 10;
+            player.gameObject.transform.GetChild(2).transform.GetChild(7).gameObject.SetActive(false);
         }
     }
 
@@ -57,12 +66,14 @@ public abstract class Hat {
     {
         public override void Apply(Player player)
         {
-            player.invincible = true; 
+            player.invincible = true;
+            player.gameObject.transform.GetChild(2).transform.GetChild(1).gameObject.SetActive(true);
         }
 
         public override void Remove(Player player)
         {
             player.invincible = false;
+            player.gameObject.transform.GetChild(2).transform.GetChild(1).gameObject.SetActive(false);
         }
     }
 
@@ -71,11 +82,13 @@ public abstract class Hat {
         public override void Apply(Player player)
         {
             player.StealthMode = true;
+            player.gameObject.transform.GetChild(2).transform.GetChild(3).gameObject.SetActive(true);
         }
 
         public override void Remove(Player player)
         {
             player.StealthMode = false;
+            player.gameObject.transform.GetChild(2).transform.GetChild(3).gameObject.SetActive(false);
         }
     }
 
@@ -86,11 +99,13 @@ public abstract class Hat {
         {
             originalScale = player.transform.localScale;
             player.transform.localScale = new UnityEngine.Vector3(2,2,2);
+            player.gameObject.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(true);
         }
 
         public override void Remove(Player player)
         {
             player.transform.localScale = originalScale;
+            player.gameObject.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }
