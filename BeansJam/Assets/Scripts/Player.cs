@@ -27,12 +27,15 @@ public class Player : MonoBehaviour {
     private float fuel = 5.0f;
     public float burnRate = 1.0f;
 
+    //Hatstuff
     public bool InvertControl = false;
     public float ControlFactor {
         get {
             return InvertControl ? -1.0f : 1.0f;
         }
     }
+    public bool invincible = false;
+    public bool stealth = false;
 
     // Use this for initialization
     void Start() {
