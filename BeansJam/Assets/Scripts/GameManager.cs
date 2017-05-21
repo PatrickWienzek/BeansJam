@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour {
     public GameObject bohne_nils;
     public GameObject bohne_simon;
 
+    public Vector3 StartPosition = new Vector3(-96, -17, 0);
+
     private GameObject _player;
     // Use this for initialization
     void Start () {
@@ -25,22 +27,24 @@ public class GameManager : MonoBehaviour {
             if (_selectedCharacter != null)
             {
                 if (_selectedCharacter.Equals(bohne.name))
-                    _player = (GameObject)Instantiate(bohne, new Vector3(0, 11.5f, 0), Quaternion.identity);
+                    _player = (GameObject)Instantiate(bohne, StartPosition, Quaternion.identity);
                 else if (_selectedCharacter.Equals(bohne_budi.name))
-                    _player = (GameObject)Instantiate(bohne_budi, new Vector3(0, 11.5f, 0), Quaternion.identity);
+                    _player = (GameObject)Instantiate(bohne_budi, StartPosition, Quaternion.identity);
                 else if (_selectedCharacter.Equals(bohne_eddie.name))
-                    _player = (GameObject)Instantiate(bohne_eddie, new Vector3(0, 11.5f, 0), Quaternion.identity);
+                    _player = (GameObject)Instantiate(bohne_eddie, StartPosition, Quaternion.identity);
                 else if (_selectedCharacter.Equals(bohne_laser.name))
-                    _player = (GameObject)Instantiate(bohne_laser, new Vector3(0, 11.5f, 0), Quaternion.identity);
+                    _player = (GameObject)Instantiate(bohne_laser, StartPosition, Quaternion.identity);
                 else if (_selectedCharacter.Equals(bohne_nils.name))
-                    _player = (GameObject)Instantiate(bohne_nils, new Vector3(0, 11.5f, 0), Quaternion.identity);
+                    _player = (GameObject)Instantiate(bohne_nils, StartPosition, Quaternion.identity);
                 else if (_selectedCharacter.Equals(bohne_simon.name))
-                    _player = (GameObject)Instantiate(bohne_simon, new Vector3(0, 11.5f, 0), Quaternion.identity);
+                    _player = (GameObject)Instantiate(bohne_simon, StartPosition, Quaternion.identity);
+
+                _player.tag = "Player";
             }
         }
 	}
 
-    public void setCharacter(string selected)
+    public void SetCharacter(string selected)
     {
         _selectedCharacter = selected;
     }

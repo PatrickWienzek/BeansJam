@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class Bar : MonoBehaviour {
 	
-	[SerializeField]
-	private float health;
+	public float health;
 
 	[SerializeField]
 	private Image content;
@@ -19,6 +18,5 @@ public class Bar : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		content.fillAmount = health;
-		health -= Time.deltaTime / 10;
 	}
 }
