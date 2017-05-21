@@ -44,8 +44,11 @@ public class Management : MonoBehaviour {
 
 		if (Input.GetKeyDown (KeyCode.Escape)) {
             animLogo.SetBool("leave", true);
-            
-            if(count >= 1)
+            Renderer credits = GameObject.Find("Credits").GetComponent<Renderer>();
+            credits.enabled = true;
+           
+
+            if (count >= 1)
                 Application.Quit();
             count++;
 		}
