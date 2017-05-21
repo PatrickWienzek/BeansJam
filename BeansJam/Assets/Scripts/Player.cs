@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Player : MonoBehaviour {
 
     public int live = 3;
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour {
         }
     }
 
+	private AudioSource[] audios;
     private Rigidbody2D _rigidbody;
     private RotationPlanet _planet;
     private GameObject planet;
@@ -71,6 +73,7 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+		audios = GetComponentsInChildren<AudioSource> ();
         _rigidbody = GetComponent<Rigidbody2D>();
         planet = GameObject.FindGameObjectWithTag("Planet");
         _planet = planet != null ? planet.GetComponent<RotationPlanet>() : null;
@@ -113,7 +116,11 @@ public class Player : MonoBehaviour {
         }
         if(wasFlying && !isFlying) {
             StartCoroutine(TurnCamera(transform.rotation));
+			audios[1].Stop ();
         }
+		if(!wasFlying && isFlying) {
+			audios[1].Play ();
+		}
 
         if(!isFlying) {
             var newCore = nearestPlanet.transform.GetChild(0);
@@ -216,6 +223,7 @@ public class Player : MonoBehaviour {
         }
 
         if(Input.GetKey(KeyCode.Space) && _jumpPossible) {
+			audios [0].Play ();
             _rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             _planet.isJumping(true);
         } else {

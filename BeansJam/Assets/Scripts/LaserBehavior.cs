@@ -9,6 +9,7 @@ public class LaserBehavior : MonoBehaviour {
     public int NumExplosions = 25;
     public float AttackCoolDown = 1.0f;
 
+	private AudioSource[] audios;
     private bool canAttack = true;
 
     public GameObject Explosion;
@@ -20,7 +21,7 @@ public class LaserBehavior : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-
+		audios = GetComponentsInChildren<AudioSource> ();
     }
 
     // Update is called once per frame
@@ -42,10 +43,12 @@ public class LaserBehavior : MonoBehaviour {
                     // TODO: PATRICK
                     GetComponentInChildren<Animator>().SetBool("eduardlaserkick", true);
                     //GetComponentInChildren<Animator>().SetBool("eduardlaserkick", false);
+					audios [2].Play ();
                 } else if(attack == Attack.Laserschelle) {
                     // TODO: PATRICK
                     GetComponentInChildren<Animator>().SetBool("eduardlaserschelle", true);
                     //GetComponentInChildren<Animator>().SetBool("eduardlaserschelle", false);
+					audios [3].Play ();
                 }
 
                 for(var i = 0; i < NumExplosions; i++) {
