@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Bar : MonoBehaviour {
 	
+
 	public float health;
 
 	[SerializeField]
@@ -17,6 +18,11 @@ public class Bar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
+	}
+
+	public void Health()
+	{
 		content.fillAmount = health;
 	}
 }

@@ -10,6 +10,7 @@ public class Management : MonoBehaviour {
 	private Animator animLogo;
 	private bool done = false;
 
+
 	private float timer;
 	// Use this for initialization
 	void Start () {
@@ -19,19 +20,27 @@ public class Management : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Space) && !done) {
+		
+
+		if (Input.GetKeyDown (KeyCode.Space) && timer >= 4f) {
+            DontDestroyOnLoad(GameObject.Find("GameManager"));
+            GameManager manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            Characters character =  GameObject.Find("Bohnen").GetComponent<Characters>();
+            manager.setCharacter(character.GetChosenChar().name);
+            SceneManager.LoadScene ("BeansJamScene");
+		}
+
+		if (done) {
+			timer += Time.deltaTime;
+		}
+
+		if (Input.GetKeyDown (KeyCode.Space) && !done && animLogo.GetCurrentAnimatorStateInfo(0).IsName("Press")) {
 			animLogo.SetBool ("leave", true);
 			beans.SetActive (true);
 			done = true;
 		}
 
-		if (Input.GetKeyDown (KeyCode.X) && done) {
-            DontDestroyOnLoad(GameObject.Find("GameManager"));
-            GameManager manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-            Characters character =  GameObject.Find("Bohnen").GetComponent<Characters>();
-            manager.SetCharacter(character.GetChosenChar().name);
-            SceneManager.LoadScene ("BeansJamScene");
-		}
+
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			Application.Quit();
 		}
