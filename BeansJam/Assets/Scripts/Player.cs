@@ -39,6 +39,23 @@ public class Player : MonoBehaviour {
     private float fuel = 5.0f;
     public float burnRate = 1.0f;
 
+    public void OnDestroyPlanet() {
+        var nearestPlanet = (
+           from planet in GameObject.FindGameObjectsWithTag("Planet")
+           let distance = (planet.transform.position - this.transform.position)
+           orderby distance.sqrMagnitude
+           select planet
+       ).FirstOrDefault();
+
+        this.planet = nearestPlanet;
+        if(this.planet != null) {
+            this._planet = this.planet.GetComponent<RotationPlanet>();
+            this._planetCore = this.planet.transform.GetChild(0);
+        }
+
+        this._jumpPossible = false;
+    }
+
     //Hatstuff
     public bool InvertControl = false;
     public float ControlFactor {
@@ -74,6 +91,8 @@ public class Player : MonoBehaviour {
 
     }
 
+  
+
     // Update is called once per frame
     void Update() {
         Move();
@@ -86,10 +105,17 @@ public class Player : MonoBehaviour {
 
         var wasFlying = isFlying;
         isFlying = Input.GetKey(KeyCode.LeftShift) && fuel > 1.0f;
-        _planet.isJumping(isFlying);
+        if(nearestPlanet == null) {
+            isFlying = true;
+        }
+        if(_planet != null) {
+            _planet.isJumping(isFlying);
+        }
         if(wasFlying && !isFlying) {
             StartCoroutine(TurnCamera(transform.rotation));
         }
+
+        
 
         if(!isFlying) {
             var newCore = nearestPlanet.transform.GetChild(0);
@@ -114,7 +140,7 @@ public class Player : MonoBehaviour {
         var bar = GameObject.FindGameObjectWithTag("UI").GetComponent<Bar>();
         bar.health = this.fuel / this.MaxFuel;
         if(this.fuel > this.MaxFuel) {
-
+            // TODO: Zweite Health-Leiste (für Astronauten-Helm)
         }
 
     }
