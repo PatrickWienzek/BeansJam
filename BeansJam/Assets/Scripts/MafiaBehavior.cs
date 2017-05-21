@@ -25,7 +25,7 @@ public class MafiaBehavior : MonoBehaviour {
     void Update() {
         this.player = this.player ?? GameObject.FindGameObjectWithTag("Player");
 
-        var canSpotPlayer = !this.player.GetComponent<Player>().StealMode;
+        var canSpotPlayer = !this.player.GetComponent<Player>().StealthMode;
 
         nearestPlanet = (
             from planet in GameObject.FindGameObjectsWithTag("Planet")

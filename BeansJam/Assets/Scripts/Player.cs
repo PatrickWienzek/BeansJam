@@ -36,10 +36,9 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public bool StealMode = false;
+    public bool StealthMode = false;
 
     public bool invincible = false;
-    public bool stealth = false;
     private Hat hat;
 
     // Use this for initialization

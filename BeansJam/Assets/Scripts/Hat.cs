@@ -70,12 +70,12 @@ public abstract class Hat {
     {
         public override void Apply(Player player)
         {
-            player.stealth = true;
+            player.StealthMode = true;
         }
 
         public override void Remove(Player player)
         {
-            player.stealth = false;
+            player.StealthMode = false;
         }
     }
 
