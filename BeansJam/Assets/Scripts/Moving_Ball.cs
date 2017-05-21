@@ -24,7 +24,7 @@ public class Moving_Ball : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		rotOverTime += Time.deltaTime;
-		rb.AddForce(new Vector2(transform.right) * acc);
+		rb.AddForce(new Vector2(transform.right.x, 0.0f) * acc);
 		rb.MoveRotation (50.0f * rotOverTime);
 	}
 
