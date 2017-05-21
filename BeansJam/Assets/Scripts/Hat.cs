@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public abstract class Hat {
 
@@ -8,13 +9,12 @@ public abstract class Hat {
         new CatHat(),
         new CaptainHat(),
         new FedoraHat(),
-        new DinoHat()
+        new DinoHat(),
+        new AstronautHat()
     };
-
     
     public abstract void Apply(Player player);
     public abstract void Remove(Player player);
-
 
     protected Hat() {
 
@@ -106,6 +106,16 @@ public abstract class Hat {
         {
             player.transform.localScale = originalScale;
             player.gameObject.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
+        }
+    }
+
+    public class AstronautHat : Hat {
+        public override void Apply(Player player) {
+            player.AdditionalMaxFuel = 50.0f;
+        }
+
+        public override void Remove(Player player) {
+            player.AdditionalMaxFuel = 0.0f;
         }
     }
 }

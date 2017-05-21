@@ -10,6 +10,17 @@ public class Player : MonoBehaviour {
     public float jumpForce = 55.0f;
     public float MaxFuel = 100.0f;
 
+    private float additionalMaxFuel = 0.0f;
+    public float AdditionalMaxFuel {
+        get {return additionalMaxFuel;}
+        set {
+            this.additionalMaxFuel = value;
+            if(this.fuel > this.MaxFuel) {
+                this.fuel = this.MaxFuel + this.additionalMaxFuel;
+            }
+        }
+    }
+
     private Rigidbody2D _rigidbody;
     private RotationPlanet _planet;
     private GameObject planet;
@@ -39,7 +50,7 @@ public class Player : MonoBehaviour {
     public bool StealthMode = false;
 
     public bool invincible = false;
-    private Hat hat;
+    public Hat Hat { get; private set; }
 
     // Use this for initialization
     void Start() {
@@ -54,11 +65,11 @@ public class Player : MonoBehaviour {
 
     internal void ApplyHat(Hat hat)
     {
-        Debug.Log("HAT " +  hat.GetType().Name);
-        if (this.hat != null)
-            this.hat.Remove(this);
+        Debug.LogFormat("Hat collected: {0}", hat.GetType().Name);
+        if (this.Hat != null)
+            this.Hat.Remove(this);
 
-        this.hat = hat;
+        this.Hat = hat;
         hat.Apply(this);
 
     }
@@ -100,11 +111,16 @@ public class Player : MonoBehaviour {
             Debug.LogFormat("Burned {0} fuel: {1} remaining", burn, this.fuel);
         }
 
-        GameObject.FindGameObjectWithTag("UI").GetComponent<Bar>().health = this.fuel / this.MaxFuel;
+        var bar = GameObject.FindGameObjectWithTag("UI").GetComponent<Bar>();
+        bar.health = this.fuel / this.MaxFuel;
+        if(this.fuel > this.MaxFuel) {
+
+        }
+
     }
 
     public void AddFuel(float fuelAmount) {
-        var add = Mathf.Min(fuelAmount, this.MaxFuel - this.fuel);
+        var add = Mathf.Min(fuelAmount, this.MaxFuel + this.AdditionalMaxFuel - this.fuel);
         this.fuel += add;
         Debug.LogFormat("Added {0} fuel: {1} remaining", add, this.fuel);
     }
