@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
     public GameObject bohne_nils;
     public GameObject bohne_simon;
 
-    public Vector3 StartPosition = new Vector3(-96, -17, 0);
+    public Vector3 StartPosition = new Vector3(-89.1f, 60.5f, 0);
 
     private GameObject _player;
     // Use this for initialization
