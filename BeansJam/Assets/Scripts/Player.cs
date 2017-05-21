@@ -79,6 +79,8 @@ public class Player : MonoBehaviour
             this.fuel = Mathf.Max(fuel - burn, 0.0f);
             Debug.LogFormat("Burned {0} fuel: {1} remaining", burn, this.fuel);
         }
+
+        GameObject.FindGameObjectWithTag("UI").GetComponent<Bar>().health = this.fuel / this.MaxFuel;
     }
 
     public void AddFuel(float fuelAmount) {
