@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System;
 
 public class Player : MonoBehaviour
 {
@@ -10,8 +9,6 @@ public class Player : MonoBehaviour
     public int live = 3;
     public float speed = 0.125f;
     public float jumpForce = 55.0f;
-    public float MaxFuel = 100.0f;
-
     private Rigidbody2D _rigidbody;
     private RotationPlanet _planet;
     private GameObject planet;
@@ -27,8 +24,7 @@ public class Player : MonoBehaviour
     private GameObject background;
 
     private bool isFlying = false;
-    private float fuel = 5.0f;
-    public float burnRate = 1.0f;
+    private float fuel = 0.0f;
 
     public bool InvertControl = false;
     public float ControlFactor {
@@ -41,9 +37,9 @@ public class Player : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        _planet = GameObject.FindGameObjectWithTag("Planet").GetComponent<RotationPlanet>();
         planet = GameObject.FindGameObjectWithTag("Planet");
-        _planet = planet != null ? planet.GetComponent<RotationPlanet>() : null;
-        _planetCore = planet != null ? planet.transform.GetChild(0) : null;
+        _planetCore = GameObject.FindGameObjectWithTag("Planet").transform.GetChild(0);
         _jumpForcePosition = transform.GetChild(1).transform;
         background = GameObject.Find("Background");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -61,7 +57,7 @@ public class Player : MonoBehaviour
         ).FirstOrDefault();
 
         var wasFlying = isFlying;
-        isFlying = Input.GetKey(KeyCode.LeftShift) && fuel > 1.0f;
+        isFlying = Input.GetKey(KeyCode.LeftShift);
         _planet.isJumping(isFlying);
         if(wasFlying && !isFlying) {
             StartCoroutine(TurnCamera(transform.rotation));
@@ -82,18 +78,7 @@ public class Player : MonoBehaviour
             Debug.DrawRay(transform.position, dir);
 
             _rigidbody.velocity = dir;
-            var burn = Mathf.Min(this.fuel, burnRate * Time.deltaTime);
-            this.fuel = Mathf.Max(fuel - burn, 0.0f);
-            Debug.LogFormat("Burned {0} fuel: {1} remaining", burn, this.fuel);
         }
-
-        GameObject.FindGameObjectWithTag("UI").GetComponent<Bar>().health = this.fuel / this.MaxFuel;
-    }
-
-    public void AddFuel(float fuelAmount) {
-        var add = Mathf.Min(fuelAmount, this.MaxFuel - this.fuel);
-        this.fuel += add;
-        Debug.LogFormat("Added {0} fuel: {1} remaining", add, this.fuel);
     }
 
     private IEnumerator TurnCamera(Quaternion prev) {
@@ -123,7 +108,7 @@ public class Player : MonoBehaviour
             RotateGameObject(nearestPlanet, planet, rotateBy);
         }
 
-        foreach (var enemy in enemies)
+		foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             RotateGameObject(nearestPlanet, enemy, rotateBy);
         }
@@ -203,12 +188,6 @@ public class Player : MonoBehaviour
         if (collision.collider)
         {
             _jumpPossible = false;
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if(collision.collider) {
-            GetComponentInChildren<CameraShake>().Shake();
         }
     }
 }

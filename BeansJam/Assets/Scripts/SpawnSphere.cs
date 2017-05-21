@@ -11,15 +11,16 @@ public class SpawnSphere : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		player = GameObject.Find ("bohne");
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		player = GameObject.FindWithTag ("Player");
 		playpos = player.transform.position;
 		timer += Time.deltaTime;
 		if (timer >= waitTime) {
-			Destroy (Instantiate (pref, new Vector2 (playpos.x + 15, Random.Range (-5, 5)), Quaternion.identity), 10f);
+			Destroy (Instantiate (pref, new Vector2 (playpos.x + 15, playpos.y + Random.Range (-5, 5)), Quaternion.identity), 10f);
 			timer = timer % waitTime;
 		}
 	}

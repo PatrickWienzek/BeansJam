@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Moving_Ball : MonoBehaviour {
 
@@ -23,7 +24,7 @@ public class Moving_Ball : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		rotOverTime += Time.deltaTime;
-		rb.AddForce(new Vector2(-3,0) * acc);
+		rb.AddForce(new Vector2(transform.right) * acc);
 		rb.MoveRotation (50.0f * rotOverTime);
 	}
 
@@ -33,6 +34,7 @@ public class Moving_Ball : MonoBehaviour {
 		if (other.tag == "Player") {
 			//em.enabled = true;
 			//other.GetComponent<SpriteRenderer> ().enabled = false;
+			SceneManager.LoadScene("BeansJamScene");
 			Destroy (other.gameObject, 0.2f);
 		}
 	}

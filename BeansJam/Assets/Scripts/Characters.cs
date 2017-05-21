@@ -10,6 +10,7 @@ public class Characters : MonoBehaviour {
 	private bool startLerpLeft = false;
 	private bool startLerpRight = false;
 	private float lerp = 0f;
+	private int[] oldLayer;
 
 	// Use this for initialization
 	void Start () {
@@ -18,9 +19,6 @@ public class Characters : MonoBehaviour {
 		for(int i = 0; i < oldPos.Length; i++)
 		{
 			oldPos[i] = chars[i].transform.position;
-		}
-		for(int i = 0; i < oldPos.Length; i++)
-		{
 			oldScale[i] = chars[i].transform.localScale;
 		}
 	}
@@ -28,7 +26,7 @@ public class Characters : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!startLerpLeft && !startLerpRight ) {
-			if (Input.GetKey (KeyCode.A)) {
+			if (Input.GetKey (KeyCode.A) || Input.GetKey (KeyCode.LeftArrow)) {
 				startLerpLeft = true;
 				chosenChar--;
                 if (chosenChar < 0)
@@ -38,7 +36,7 @@ public class Characters : MonoBehaviour {
 		}
 
 		if (!startLerpRight && !startLerpLeft) {
-			if (Input.GetKey (KeyCode.D)) {
+			if (Input.GetKey (KeyCode.D) || Input.GetKey (KeyCode.RightArrow)) {
 				startLerpRight = true;
 				chosenChar++;
                 if (chosenChar > chars.Length -1)
