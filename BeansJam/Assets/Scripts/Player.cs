@@ -198,4 +198,10 @@ public class Player : MonoBehaviour
             _jumpPossible = false;
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if(collision.collider) {
+            GetComponentInChildren<CameraShake>().Shake();
+        }
+    }
 }
