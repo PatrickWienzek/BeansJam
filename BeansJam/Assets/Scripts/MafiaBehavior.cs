@@ -5,6 +5,12 @@ using System.Linq;
 
 public class MafiaBehavior : MonoBehaviour {
 
+
+	// shoot
+	public GameObject pref;
+	public float waitTime = 2f;
+	private float timer = 0f;
+
     public float CurrentRadius;
     public float Alpha;
 
@@ -23,8 +29,9 @@ public class MafiaBehavior : MonoBehaviour {
     }
 
     void Update() {
+		
         this.player = this.player ?? GameObject.FindGameObjectWithTag("Player");
-
+		Shoot (player);
         var canSpotPlayer = !this.player.GetComponent<Player>().StealthMode;
 
         nearestPlanet = (
@@ -62,6 +69,15 @@ public class MafiaBehavior : MonoBehaviour {
         var hit = Physics2D.Raycast(this.transform.position, (player.transform.position - this.transform.position).normalized, this.ScanArea);
         hasSpottedPlayer = canSpotPlayer && hit.collider != null && hit.collider.gameObject == player;
     }
+
+	private void Shoot(GameObject player)
+	{
+		timer += Time.deltaTime;
+		if (timer >= waitTime) {
+			Destroy(Instantiate (pref, transform.position, Quaternion.identity), 10f);
+			timer = timer % waitTime;
+		}
+	}
 
     private Vector3 Difference(GameObject a, GameObject b) {
         return a.transform.position - b.transform.position;
