@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -36,6 +37,7 @@ public class Player : MonoBehaviour {
     }
     public bool invincible = false;
     public bool stealth = false;
+    private Hat hat;
 
     // Use this for initialization
     void Start() {
@@ -46,6 +48,16 @@ public class Player : MonoBehaviour {
         _jumpForcePosition = transform.GetChild(1).transform;
         background = GameObject.Find("Background");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+    }
+
+    internal void ApplyHat(Hat hat)
+    {
+        if (this.hat != null)
+            this.hat.Remove(this);
+
+        this.hat = hat;
+        hat.Apply(this);
+
     }
 
     // Update is called once per frame

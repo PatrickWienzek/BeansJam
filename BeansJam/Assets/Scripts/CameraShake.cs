@@ -21,7 +21,7 @@ public class CameraShake : MonoBehaviour {
     }
 
     private IEnumerator ShakeImpl() {
-        var prevPosition = this.transform.position;
+        //var prevPosition = this.transform.position;
 
         var shakeTimer = this.ShakeDuration;
         while(shakeTimer > 0.0f) {
@@ -32,6 +32,6 @@ public class CameraShake : MonoBehaviour {
             yield return null;
         }
 
-        this.transform.position = prevPosition;
+        this.transform.localPosition = new Vector3(0.0f, 0.0f, -10.0f);
     }
 }
