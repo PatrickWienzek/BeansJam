@@ -9,6 +9,7 @@ public class Management : MonoBehaviour {
 	public GameObject logoText;
 	private Animator animLogo;
 	private bool done = false;
+    private int count = 0;
 
 
 	private float timer;
@@ -42,7 +43,11 @@ public class Management : MonoBehaviour {
 
 
 		if (Input.GetKeyDown (KeyCode.Escape)) {
-			Application.Quit();
+            animLogo.SetBool("leave", true);
+            
+            if(count >= 1)
+                Application.Quit();
+            count++;
 		}
 	}
 }
