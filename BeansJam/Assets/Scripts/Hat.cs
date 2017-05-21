@@ -10,7 +10,10 @@ public abstract class Hat {
         new CaptainHat(),
         new FedoraHat(),
         new DinoHat(),
-        new AstronautHat()
+        new AstronautHat(),
+        new CarlHat(),
+        new OtterHat(),
+        new TentacleHat()
     };
     
     public abstract void Apply(Player player);
@@ -119,6 +122,45 @@ public abstract class Hat {
         public override void Remove(Player player) {
             player.AdditionalMaxFuel = 0.0f;
             player.gameObject.transform.GetChild(2).transform.GetChild(5).gameObject.SetActive(false);
+        }
+    }
+
+    public class CarlHat : Hat
+    {
+        public override void Apply(Player player)
+        {
+            player.gameObject.transform.GetChild(2).transform.GetChild(2).gameObject.SetActive(true);
+        }
+
+        public override void Remove(Player player)
+        {
+            player.gameObject.transform.GetChild(2).transform.GetChild(2).gameObject.SetActive(false);
+        }
+    }
+
+    public class OtterHat : Hat
+    {
+        public override void Apply(Player player)
+        {
+            player.gameObject.transform.GetChild(2).transform.GetChild(8).gameObject.SetActive(true);
+        }
+
+        public override void Remove(Player player)
+        {
+            player.gameObject.transform.GetChild(2).transform.GetChild(8).gameObject.SetActive(false);
+        }
+    }
+
+    public class TentacleHat : Hat
+    {
+        public override void Apply(Player player)
+        {
+            player.gameObject.transform.GetChild(2).transform.GetChild(9).gameObject.SetActive(true);
+        }
+
+        public override void Remove(Player player)
+        {
+            player.gameObject.transform.GetChild(2).transform.GetChild(9).gameObject.SetActive(false);
         }
     }
 }
