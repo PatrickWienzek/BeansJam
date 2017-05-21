@@ -35,6 +35,5 @@ public class Management : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			Application.Quit();
 		}
-
 	}
 }

@@ -42,11 +42,31 @@ public class Player : MonoBehaviour
             select planet
         ).FirstOrDefault();
 
-        _planetCore = nearestPlanet.transform.GetChild(0);
+        var newCore = nearestPlanet.transform.GetChild(0);
+        if(newCore != _planetCore) {
+            StartCoroutine(TurnCamera(_planetCore));
+            _planetCore = nearestPlanet.transform.GetChild(0);
+        }
 
         var rotateBy = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
         this.RotateObjects(nearestPlanet, rotateBy);
         Gravity();
+    }
+
+    private float cameraTimer = 0.0f;
+    private IEnumerator TurnCamera(Transform prev) {
+        cameraTimer = 0.25f;
+
+        while(cameraTimer > 0.0f) {
+            this.transform.rotation = Quaternion.Lerp(
+                prev.rotation,
+                Quaternion.LookRotation(Vector3.forward, this.transform.position - _planetCore.position),
+                1f - 4f * cameraTimer
+            );
+
+            cameraTimer -= Time.deltaTime;
+            yield return null;
+        }
     }
 
     private void RotateObjects(GameObject nearestPlanet, float rotateBy)
@@ -73,7 +93,16 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        transform.Translate(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0, 0);
+        var horizontal = Input.GetAxis("Horizontal");
+        transform.Translate(horizontal * speed * Time.deltaTime, 0, 0);
+
+        if(horizontal != 0.0f) {
+            if(transform.Find("Visuals") != null) {
+                transform.Find("Visuals")
+                    .transform
+                    .localRotation = Quaternion.Euler(0f, horizontal < 0f ? 180f : 0f, 0f);
+            }
+        }
 
         if (_jumpPossible)
         {
@@ -89,17 +118,11 @@ public class Player : MonoBehaviour
         {
             _rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             _planet.isJumping(true);
-
-            
         }
         else
         {
             _planet.isJumping(false);
         }
-
-
-            
-
     }
         
 
@@ -112,7 +135,7 @@ public class Player : MonoBehaviour
 
             transform.position = Vector3.MoveTowards(transform.position, _planetCore.position, _gravity * _extraGrav * Time.deltaTime);
 
-            transform.up = transform.position - _planetCore.position;
+            //transform.up = transform.position - _planetCore.position;
         }
         
     }
