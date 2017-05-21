@@ -115,8 +115,6 @@ public class Player : MonoBehaviour {
             StartCoroutine(TurnCamera(transform.rotation));
         }
 
-        
-
         if(!isFlying) {
             var newCore = nearestPlanet.transform.GetChild(0);
             if(newCore != _planetCore) {

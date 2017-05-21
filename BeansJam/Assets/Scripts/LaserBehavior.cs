@@ -39,9 +39,13 @@ public class LaserBehavior : MonoBehaviour {
             if((nearestPlanet.transform.position - this.transform.position).sqrMagnitude <= MaxAttackDistance * MaxAttackDistance) {
                 // TODO: Play attack animation/s
                 if(attack == Attack.Laserkick) {
-                    // ...
+                    // TODO: PATRICK
+                    GetComponentInChildren<Animator>().SetBool("eduardlaserkick", true);
+                    //GetComponentInChildren<Animator>().SetBool("eduardlaserkick", false);
                 } else if(attack == Attack.Laserschelle) {
-                    // ...
+                    // TODO: PATRICK
+                    GetComponentInChildren<Animator>().SetBool("eduardlaserschelle", true);
+                    //GetComponentInChildren<Animator>().SetBool("eduardlaserschelle", false);
                 }
 
                 for(var i = 0; i < NumExplosions; i++) {
