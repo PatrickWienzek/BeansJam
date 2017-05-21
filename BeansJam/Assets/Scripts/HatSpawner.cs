@@ -34,7 +34,6 @@ public class HatSpawner : MonoBehaviour {
     {
         if (collision.gameObject.tag != "Player")
             return;
-
         if(_player == null) {
             _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         }
@@ -45,7 +44,6 @@ public class HatSpawner : MonoBehaviour {
         do {
             hat = Hat.AllHats[Random.Range(0, Hat.AllHats.Count)];
         } while(hat == currentHat);
-
         _player.ApplyHat(hat);
 
 

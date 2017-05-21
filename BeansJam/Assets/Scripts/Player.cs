@@ -202,6 +202,12 @@ public class Player : MonoBehaviour {
                     .transform
                     .localRotation = Quaternion.Euler(0f, horizontal < 0f ? 180f : 0f, 0f);
             }
+            if (transform.Find("hats") != null)
+            {
+                transform.Find("hats")
+                    .transform
+                    .localRotation = Quaternion.Euler(0f, horizontal < 0f ? 180f : 0f, 0f);
+            }
         }
 
         if(_jumpPossible) {
