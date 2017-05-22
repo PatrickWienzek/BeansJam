@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Characters : MonoBehaviour {
 	public GameObject[] chars;
+    public GameObject leonie;
 	private int chosenChar = 2;
 	private Vector3[] oldPos;
 	private Vector3[] oldScale;
@@ -12,8 +13,24 @@ public class Characters : MonoBehaviour {
 	private float lerp = 0f;
 	private int[] oldLayer;
 
-	// Use this for initialization
-	void Start () {
+    private bool isLeonie;
+
+    private int konamiCodeIndex = 0;
+    private KeyCode[] konamiCode = new[] {
+        KeyCode.UpArrow,
+        KeyCode.UpArrow,
+        KeyCode.DownArrow,
+        KeyCode.DownArrow,
+        KeyCode.LeftArrow,
+        KeyCode.RightArrow,
+        KeyCode.LeftArrow,
+        KeyCode.RightArrow,
+        KeyCode.B,
+        KeyCode.A
+    };
+
+    // Use this for initialization
+    void Start () {
 		oldPos = new Vector3[chars.Length];
 		oldScale = new Vector3[chars.Length];
 		for(int i = 0; i < oldPos.Length; i++)
@@ -25,6 +42,13 @@ public class Characters : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        if(konamiCodeIndex < konamiCode.Length && Input.GetKey(konamiCode[konamiCodeIndex])) {
+            konamiCodeIndex++;
+            if(konamiCodeIndex == konamiCode.Length) {
+                isLeonie = true;
+            }
+        }
+
 		if (!startLerpLeft && !startLerpRight ) {
 			if (Input.GetKey (KeyCode.A) || Input.GetKey (KeyCode.LeftArrow)) {
 				startLerpLeft = true;
@@ -110,6 +134,9 @@ public class Characters : MonoBehaviour {
 	}
 	public GameObject GetChosenChar()
 	{
+        if(isLeonie) {
+            return leonie;
+        }
 
         return chars [chosenChar];
 	}

@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(AudioSource))]
 public class Player : MonoBehaviour {
 
     public int live = 3;
@@ -21,6 +23,7 @@ public class Player : MonoBehaviour {
         }
     }
 
+	private AudioSource[] audios;
     private Rigidbody2D _rigidbody;
     private RotationPlanet _planet;
     private GameObject planet;
@@ -29,6 +32,18 @@ public class Player : MonoBehaviour {
     private bool _jumpPossible = false;
     private Transform _jumpForcePosition;
     private Transform _planetCore;
+
+    internal void DealDamage(float damage) {
+        this.fuel -= damage;
+
+        if(this.fuel <= 0.0f) {
+            // TODO: Todesanimation, Patrick
+
+
+            SceneManager.LoadScene("BeansJamScene");
+        }
+    }
+
     private float _gravity = 5f;
     private GameObject[] enemies;
     private float _extraGrav = 1;
@@ -38,6 +53,23 @@ public class Player : MonoBehaviour {
     private bool isFlying = false;
     private float fuel = 5.0f;
     public float burnRate = 1.0f;
+
+    public void OnDestroyPlanet() {
+        var nearestPlanet = (
+           from planet in GameObject.FindGameObjectsWithTag("Planet")
+           let distance = (planet.transform.position - this.transform.position)
+           orderby distance.sqrMagnitude
+           select planet
+       ).FirstOrDefault();
+
+        this.planet = nearestPlanet;
+        if(this.planet != null) {
+            this._planet = this.planet.GetComponent<RotationPlanet>();
+            this._planetCore = this.planet.transform.GetChild(0);
+        }
+
+        this._jumpPossible = false;
+    }
 
     //Hatstuff
     public bool InvertControl = false;
@@ -54,6 +86,7 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+		audios = GetComponentsInChildren<AudioSource> ();
         _rigidbody = GetComponent<Rigidbody2D>();
         planet = GameObject.FindGameObjectWithTag("Planet");
         _planet = planet != null ? planet.GetComponent<RotationPlanet>() : null;
@@ -74,6 +107,8 @@ public class Player : MonoBehaviour {
 
     }
 
+  
+
     // Update is called once per frame
     void Update() {
         Move();
@@ -86,10 +121,19 @@ public class Player : MonoBehaviour {
 
         var wasFlying = isFlying;
         isFlying = Input.GetKey(KeyCode.LeftShift) && fuel > 1.0f;
-        _planet.isJumping(isFlying);
+        if(nearestPlanet == null) {
+            isFlying = true;
+        }
+        if(_planet != null) {
+            _planet.isJumping(isFlying);
+        }
         if(wasFlying && !isFlying) {
             StartCoroutine(TurnCamera(transform.rotation));
+			audios[1].Stop ();
         }
+		if(!wasFlying && isFlying) {
+			audios[1].Play ();
+		}
 
         if(!isFlying) {
             var newCore = nearestPlanet.transform.GetChild(0);
@@ -114,7 +158,7 @@ public class Player : MonoBehaviour {
         var bar = GameObject.FindGameObjectWithTag("UI").GetComponent<Bar>();
         bar.health = this.fuel / this.MaxFuel;
         if(this.fuel > this.MaxFuel) {
-
+            // TODO: Zweite Health-Leiste (für Astronauten-Helm)
         }
 
     }
@@ -192,6 +236,7 @@ public class Player : MonoBehaviour {
         }
 
         if(Input.GetKey(KeyCode.Space) && _jumpPossible) {
+			audios [0].Play ();
             _rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             _planet.isJumping(true);
         } else {

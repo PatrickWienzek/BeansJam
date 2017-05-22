@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
     public GameObject bohne_laser;
     public GameObject bohne_nils;
     public GameObject bohne_simon;
+    public GameObject bohne_leonie;
 
     public Vector3 StartPosition = new Vector3(-89.1f, 60.5f, 0);
 
@@ -38,6 +39,9 @@ public class GameManager : MonoBehaviour {
                     _player = (GameObject)Instantiate(bohne_nils, StartPosition, Quaternion.identity);
                 else if (_selectedCharacter.Equals(bohne_simon.name))
                     _player = (GameObject)Instantiate(bohne_simon, StartPosition, Quaternion.identity);
+                else if (_selectedCharacter.Equals(bohne_leonie.name)) {
+                    _player = (GameObject)Instantiate(bohne_leonie, StartPosition, Quaternion.identity);
+                }
 
                 _player.tag = "Player";
             }

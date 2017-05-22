@@ -56,7 +56,7 @@ public class PickUpBehavior : MonoBehaviour {
             }
         } else {
             var diff = player.transform.position - this.transform.position;
-            var delta = diff.normalized * Time.deltaTime;
+            var delta = diff.normalized * this.linearVelocity * Time.deltaTime;
 
             if(delta.sqrMagnitude > diff.sqrMagnitude) {
                 //this.gameObject.SetActive(false);
