@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour {
 
     public Vector3 StartPosition = new Vector3(-89.1f, 60.5f, 0);
 
-    private GameObject _player;
+    [HideInInspector]
+    public GameObject _player;
     // Use this for initialization
     void Start () {
 		
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour {
                 }
 
                 _player.tag = "Player";
+
             }
         }
 	}
