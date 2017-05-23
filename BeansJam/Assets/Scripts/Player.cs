@@ -236,7 +236,8 @@ public class Player : MonoBehaviour {
         }
 
         if(Input.GetKey(KeyCode.Space) && _jumpPossible) {
-			audios [0].Play ();
+            if(!audios[0].isPlaying)
+			    audios [0].Play ();
             _rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             _planet.isJumping(true);
         } else {
