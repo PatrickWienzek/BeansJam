@@ -33,7 +33,7 @@ public abstract class Hat {
 
         public override void Remove(Player player) {
             player.rotationSpeed -= 5;
-            player.speed += 5;
+            player.speed -= 5;
             player.gameObject.transform.GetChild(2).transform.GetChild(6).gameObject.SetActive(false);
         }
     }

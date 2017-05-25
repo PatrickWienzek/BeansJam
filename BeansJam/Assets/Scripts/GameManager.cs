@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
     public Vector3 StartPosition = new Vector3(-89.1f, 60.5f, 0);
 
     [HideInInspector]
-    public GameObject _player;
+    private GameObject _player;
     // Use this for initialization
     void Start () {
 		
@@ -50,6 +50,10 @@ public class GameManager : MonoBehaviour {
         }
 	}
 
+    public GameObject GetCharacter()
+    {
+        return _player;
+    }
     public void SetCharacter(string selected)
     {
         _selectedCharacter = selected;

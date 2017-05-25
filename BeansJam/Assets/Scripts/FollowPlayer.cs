@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour {
-
+    private Camera cam;
 	private GameObject player;
-
+    private GameManager manager;
 	private Vector3 offset;
 	// Use this for initialization
 	void Start () {
-        GameManager manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        player = manager._player;
+        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        player = manager.GetCharacter();
     }
 	
 	// Update is called once per frame
-	void LateUpdate () {
-        transform.position = player.transform.position + offset;
+	void FixedUpdate () {
+        transform.position = player.transform.position;
 	}
 }

@@ -23,7 +23,7 @@ public class Management : MonoBehaviour {
 	void Update () {
 		
 
-		if (Input.GetKeyDown (KeyCode.Space) && timer >= 4f) {
+		if (Input.GetKeyDown (KeyCode.Space) && timer >= 3f) {
             DontDestroyOnLoad(GameObject.Find("GameManager"));
             GameManager manager = GameObject.Find("GameManager").GetComponent<GameManager>();
             Characters character =  GameObject.Find("Bohnen").GetComponent<Characters>();

@@ -23,6 +23,9 @@ public class Player : MonoBehaviour {
         }
     }
 
+    //Esc
+    private int count = 0; 
+
 	private AudioSource[] audios;
     private Rigidbody2D _rigidbody;
     private RotationPlanet _planet;
@@ -33,14 +36,16 @@ public class Player : MonoBehaviour {
     private Transform _jumpForcePosition;
     private Transform _planetCore;
 
+    private Animator anim;
+
     internal void DealDamage(float damage) {
         this.fuel -= damage;
 
         if(this.fuel <= 0.0f) {
-            // TODO: Todesanimation, Patrick
+            anim.SetBool("death_onPlanet", true);
 
 
-            SceneManager.LoadScene("BeansJamScene");
+            //SceneManager.LoadScene("BeansJamScene");
         }
     }
 
@@ -86,6 +91,7 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        anim = GetComponentInChildren<Animator>();
 		audios = GetComponentsInChildren<AudioSource> ();
         _rigidbody = GetComponent<Rigidbody2D>();
         planet = GameObject.FindGameObjectWithTag("Planet");
@@ -161,6 +167,16 @@ public class Player : MonoBehaviour {
             // TODO: Zweite Health-Leiste (für Astronauten-Helm)
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Renderer credits = GameObject.Find("Credits").GetComponent<Renderer>();
+            credits.enabled = true;
+
+
+            if (count >= 1)
+                Application.Quit();
+            count++;
+        }
     }
 
     public void AddFuel(float fuelAmount) {
